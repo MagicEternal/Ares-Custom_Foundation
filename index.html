@@ -1,0 +1,814 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Ares - Custom Foundation Generator</title>
+	<style  type="text/css">
+		/* #################################### CSS #################################### */
+		BODY {
+			font-family: Verdana, sans-serif;
+			margin: 0px;
+			padding: 0px;
+			color: #B3D45F;
+			background-color: #4F6D00;
+		}
+		FORM INPUT {
+			text-align: right;
+		}
+		H1 {
+			margin-top: 0px;
+			text-transform: uppercase;
+		}
+		P {
+			margin-bottom: 0px;
+		}
+		INPUT[type="text"], TEXTAREA, SELECT {
+			background-color: #466100;
+			border-top: 1px solid #344700;
+			border-bottom: 1px solid #628700;
+			border-left: 1px solid #344700; /*3d5400*/
+			border-right: 1px solid #628700;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			padding: 2px;
+			color: #ABF014;
+		}
+		INPUT[type="text"]:hover, SELECT:hover {
+			background-color: #4F6D00;
+			border: 1px solid #7AA800;
+		}
+		INPUT[type="text"]:focus, SELECT:focus {
+			/* background-color: #4F6D00; */
+			border: 1px solid #7AA800;
+		}
+		INPUT[type="submit"], INPUT[type="button"], BUTTON {
+			background-image: url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%01%00%00%00%1E%08%02%00%00%00b%F7%E3%90%00%00%00%01sRGB%00%AE%CE%1C%E9%00%00%00%09pHYs%00%00%0B%13%00%00%0B%13%01%00%9A%9C%18%00%00%00%07tIME%07%D9%09%1E%04%0E%0E%3A%01%0D%CF%00%00%00%25tEXtComment%00Created%20by%20Renegade%20with%20GIMP%A1-%04t%00%00%00MIDAT%08%D7-%C5%B1%11%840%00%03A%F9%ECZ(%97n%E8%EA%23%86%D0%92%08%F8%60gu%5E%07Ui%83T%DAR%05%B5%24%25.N%F0.v%F1.q%B0%CB%FD%FC%F0%16%89%88E%B6%B0%C5%18b%E8%FF%10H%CC)%E6%FA%AC%A5%17x%C739%803%AD%FD%00%00%00%00IEND%AEB%60%82");
+			border-color: #aced00 #344700 #2b3b00 #a8e800;
+			border-style: solid;
+			border-width: 1px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			color: #253300;
+			cursor: pointer;
+		}
+		/*INPUT[type="submit"]:hover, INPUT[type="button"]:hover {
+			border-color: #aced00 #344700 #2b3b00 #a8e800;
+		}*/
+		INPUT[type="submit"]:active, INPUT[type="button"]:active, BUTTON:active {
+			border-color: #2b3b00 #a8e800 #aced00 #344700;
+			/* border-color: #aced00 #344700 #2b3b00 #a8e800; */
+		}
+		#width, #height {
+			width: 5em;
+		}
+		#number_warning_x, #number_warning_y, #name_warning {
+			font-weight: bold;
+			font-size: large;
+			/*color: #990000;*/
+		}
+		#number_warning_x EM, #number_warning_y EM, #name_warning EM {
+			color: #EEEE00;
+			font-style: normal;
+		}
+		#name_note {
+			font-weight: bold;
+			/* color: #880000; */
+		}
+		#warfac_note {
+			font-size: small;
+			width: 500px;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: justify;
+		}
+		INPUT[type="text"].inputwarn {
+			border: 2px solid #DD0000;
+		}
+		#sidelabels {
+			position: relative;
+			top: 0px;
+			left: 0px;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 3em;
+			
+			-moz-transform: rotate(45deg);
+			-webkit-transform: rotate(45deg);
+			transform: rotate(45deg);
+			-moz-user-select: none;
+		}
+		#sidelabels.flat-view {
+			-moz-transform: rotate(0deg);
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		#sidelabels #label_top {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		#sidelabels #label_right {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+		}
+		#sidelabels #label_bottom {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+		}
+		#sidelabels #label_left {
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+		}
+		#editor {
+			text-align: center;
+			border-collapse: collapse;
+		}
+		#editor TD {
+			width: 40px;
+			height: 40px;
+		}
+		#editor .editCell {
+			border: 1px solid #2b3b00;
+			cursor: pointer;
+		}
+		#editor .topCell {
+			border-left: 1px solid #3d5400;
+			border-right: 1px solid #3d5400;
+			border-bottom: 1px solid #2b3b00;
+		}
+		#editor .leftCell {
+			border-top: 1px solid #3d5400;
+			border-right: 1px solid #2b3b00;
+			border-bottom: 1px solid #3d5400;
+		}
+		#editor .outlineMargin {
+			border: 1px solid #4c630f !important;
+			background-color: #607e13;
+			cursor: pointer;
+		}
+		#editor .selectedCell {
+			border: 1px solid #008800 !important;
+			background-color: #00AA00;
+		}
+		#editor .outlineCell {
+			border: 1px solid #AA5500 !important;
+			background-color: #FF9900;
+		}
+		#editor .bibCell {
+			border: 1px solid #000088 !important;
+			background-color: #0000AA;
+		}
+		#editor .editCell:hover, #editor .outlineMargin:hover {
+			border: 1px solid #AA0000;
+			background-color: #880000;
+		}
+		#controlbuttons {
+			position: absolute;
+			bottom: 6px;
+			right: 10px;
+		}
+		#view-controls {
+			position: absolute;
+			bottom: 6px;
+			left: 10px;
+		}
+		#language-selector {
+			position: absolute;
+			top: 6px;
+			left: 10px;
+		}
+		#hint {
+			position: absolute;
+			top: 6px;
+			right: 10px;
+		}
+		#hint EM {
+			font-style: normal;
+			font-family: "Courier New", monospace;
+		}
+		#code {
+			height: 300px;
+			width: 500px;
+			font-family: "Courier New", monospace;
+		}
+		#layout_header {
+			background-color: #7AA800;
+			border-bottom: 1px solid #557500;
+			height: 100px;
+			font-size: xx-large;
+			font-weight: bold;
+			color: #c8ed6a;
+		}
+		#layout_header SPAN {
+			position: absolute;
+			top: 25px;
+			left: 40px;
+			text-shadow: 1px 1px 5px #557500;
+		}
+		#layout_params {
+			background-color: #647E20;
+			border-top: 1px solid #779626;
+			border-bottom: 1px solid #4f6319;
+			padding: 0.5em 0.5em 0.8em 2em;
+			color: #c8ed6b;
+			/* -moz-box-shadow: 0px 0px 50px 20px #557500; */
+		}
+		#layout_canvas {
+			background-color: #4F6D00;
+			border-top: 1px solid #5c8000;
+			border-bottom: 1px solid #3d5400;
+			padding: 10em 0px 10em 0px;
+			
+			position: relative;
+			top: 0px;
+			left: 0px;
+		}
+		#layout_code {
+			background-color: #4F6D00;
+			border-top: 1px solid #628700;
+			text-align: center;
+		}
+		#code-container {
+			margin: 10px auto;
+			width: 500px;
+		}
+		.copy-btn {
+			margin: 5px 0;
+			padding: 5px 10px;
+		}
+		#layout_footer {
+			margin-top: 5em;
+			font-size: x-small;
+			border-top: 1px solid #779626;
+			text-align: center;
+			padding: 0.2em;
+			
+			background-color: #647E20;
+		}
+	</style>
+</head>
+<body>
+<!-- #################################### HTML #################################### -->
+	<!-- Header -->
+	<div id="layout_header">
+		<span id="header-title">Ares Custom Foundation Generator</span>
+		<!-- 语言选择器 -->
+		<div id="language-selector">
+			<select id="lang-select">
+				<option value="en">English</option>
+				<option value="zh">中文</option>
+			</select>
+		</div>
+	</div>
+	<!-- Base parameter block -->
+	<div id="layout_params">
+		<h1 id="foundation-title">Foundation</h1>
+		<form id="widthheight" action="./">
+			<p>
+				<label for="name" id="label-name">Building (art) Name:</label>
+				<input type="text" name="name_n" id="name" value="CATEMP">
+			</p>
+			<p>
+				<label for="width" id="label-width">X / Width:</label>
+				<input type="text" name="width_n" id="width" value="5" maxlength="3">
+				&nbsp;&nbsp;&nbsp;
+				<label for="height" id="label-height">Y / Height:</label>
+				<input type="text" name="height_n" id="height" value="5" maxlength="3">
+				&nbsp;&nbsp;&nbsp;
+				<input type="submit" name="set_params_n" id="set_params" value="Set Base Parameters">
+			</p>
+		</form>
+		<!-- Warnings, these only pop up if there's stuff to complain about. -->
+		<p id="number_warning_x" style="display: none;">Warning! Your <em>width</em> is either <em>0 (zero)</em> or could <em>not</em> be <em>recognized</em> as a number! Please check your input.</p>
+		<p id="number_warning_y" style="display: none;">Warning! Your <em>height</em> is either <em>0 (zero)</em> or could <em>not</em> be <em>recognized</em> as a number! Please check your input.</p>
+		<p id="name_warning" style="display: none;">Warning! Your building/art <em>name</em> is either <em>empty or</em> contains <em>whitespace</em>. Please check your input.</p>
+		<p id="name_note" style="display: none;">Attention: Your building/art name is longer than 8 characters. While that is possible, it is non-standard and not recommended.</p>
+	</div>
+	
+	<!-- The canvas to "draw" on -->
+	<div id="layout_canvas">
+		<div id="hint">鼠标左键点击（选择/取消）放置建造单元格<br>按[Ctrl]+则作为轮廓单元格<br>按[Shift]+则作为出口格（FoundationOutline.10）</div>
+		<!-- 视图控制按钮 -->
+		<div id="view-controls">
+			<button id="toggle-view" class="view-btn">切换视图 (斜面/正面)</button>
+		</div>
+		<!-- The corner labels are necessary for browsers who don't support rotation, and thus see the canvas 45° left -->
+		<div id="sidelabels" style="display: none;">
+			<div id="label_top">Top / 0</div>
+			<div id="label_right">Right / X</div>
+			<table id="editor"><tr><td>dummy data to silence validator</td></tr></table>
+			<div id="label_bottom">Bottom</div>
+			<div id="label_left">Left / Y</div>
+		</div>
+		<!-- Outlines & clear buttons -->
+		<div id="controlbuttons">
+			<input type="button" name="outlnbtn_n" id="outlnbtn" value="Generate Outline">
+			&nbsp;
+			<input type="button" name="clearbtn_n" id="clearbtn" value="Clear Cells">
+		</div>
+	</div>
+	<!-- Code text and .10 outline warning -->
+	<div id="layout_code">
+		<h1 id="code-title">Code</h1>
+		<div id="code-container">
+			<!-- 复制按钮 -->
+			<button class="copy-btn" id="copy-code-btn">复制代码</button>
+			<textarea id="code" readonly="readonly" cols="48" rows="16">Please enter name, width and height at the top and click "Set Base Parameters".</textarea>
+		</div>
+		<p id="warfac_note" style="display: none;"><strong>Note on War Factories and outlines:</strong> On War Factories, the game uses FoundationOutline.10 as the primary exit destination for newly spawned units, using the eight adjacent cells as alternative destinations. These cells basically form what the game sees as the factory's "bib", regardless of graphics.<br>You are seeing this message because you have no FoundationOutline.10 defined - if you are not making a foundation for a War Factory, this note can be ignored.<br>You can set FoundationOutline.10 manually by shift-clicking anywhere on the canvas.</p>
+	</div>
+
+	<div id="layout_footer">
+		<span id="footer-text">Written 29.09.09 by Renegade</span>
+	</div>
+	
+	<!-- #################################### JAVASCRIPT #################################### -->
+	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+	<script type="text/javascript" src="./jquery-1.4.2.min.js"></script>
+	<!-- <script type="text/javascript">
+		google.load("jquery", "1");
+		google.setOnLoadCallback(function() {
+			// initialization
+			$("#number_warning_x").hide();
+			$("#number_warning_y").hide();
+			$("#name_warning").hide();
+			$("#name_note").hide();
+			$("#warfac_note").hide();
+			$("#sidelabels").hide();
+			//$("#set_params").click(generateCanvas);
+			$("#widthheight").submit(generateCanvas); // set event handler
+			$("#widthheight").submit(); // trigger event to create default canvas
+			$("#clearbtn").click(function() {updateCode(true);});
+			$("#outlnbtn").click(generateOutline);
+			$("#code").val("Please enter name, width and height at the top and click \"Set Base Parameters\"."); // FF saves the value over refreshes, leaving old foundation data with empty canvases without this.
+		});
+	</script> -->
+	
+	<script type="text/javascript">
+		// 语言包
+		const lang = {
+			en: {
+				headerTitle: "Ares Custom Foundation Generator",
+				foundationTitle: "Foundation",
+				labelName: "Building (art) Name:",
+				labelWidth: "X / Width:",
+				labelHeight: "Y / Height:",
+				setParams: "Set Base Parameters",
+				numberWarningX: "Warning! Your <em>width</em> is either <em>0 (zero)</em> or could <em>not</em> be <em>recognized</em> as a number! Please check your input.",
+				numberWarningY: "Warning! Your <em>height</em> is either <em>0 (zero)</em> or could <em>not</em> be <em>recognized</em> as a number! Please check your input.",
+				nameWarning: "Warning! Your building/art <em>name</em> is either <em>empty or</em> contains <em>whitespace</em>. Please check your input.",
+				nameNote: "Attention: Your building/art name is longer than 8 characters. While that is possible, it is non-standard and not recommended.",
+				hint: "Left mouse click (select/deselect) to place building cells<br>Press [Ctrl]+click for outline cells<br>Press [Shift]+click for exit cell (FoundationOutline.10)",
+				toggleView: "Toggle View (Angled/Flat)",
+				generateOutline: "Generate Outline",
+				clearCells: "Clear Cells",
+				codeTitle: "Code",
+				copyCodeBtn: "Copy Code",
+				warfacNote: "<strong>Note on War Factories and outlines:</strong> On War Factories, the game uses FoundationOutline.10 as the primary exit destination for newly spawned units, using the eight adjacent cells as alternative destinations. These cells basically form what the game sees as the factory's \"bib\", regardless of graphics.<br>You are seeing this message because you have no FoundationOutline.10 defined - if you are not making a foundation for a War Factory, this note can be ignored.<br>You can set FoundationOutline.10 manually by shift-clicking anywhere on the canvas.",
+				footerText: "Written 29.09.09 by Renegade",
+				labelTop: "Top / 0",
+				labelRight: "Right / X",
+				labelBottom: "Bottom",
+				labelLeft: "Left / Y",
+				codePlaceholder: "Please enter name, width and height at the top and click \"Set Base Parameters\".",
+				outlineMarginTitle: "Margin, for outlines only."
+			},
+			zh: {
+				headerTitle: "Ares 自定义地基生成器",
+				foundationTitle: "地基设置",
+				labelName: "建筑(图像)名称:",
+				labelWidth: "X / 宽度:",
+				labelHeight: "Y / 高度:",
+				setParams: "设置基础参数",
+				numberWarningX: "警告! 您的<em>宽度</em>值为<em>0</em>或无法被识别为有效数字! 请检查输入。",
+				numberWarningY: "警告! 您的<em>高度</em>值为<em>0</em>或无法被识别为有效数字! 请检查输入。",
+				nameWarning: "警告! 您的建筑/图像名称<em>为空</em>或包含<em>空格</em>! 请检查输入。",
+				nameNote: "注意: 您的建筑/图像名称超过8个字符。虽然技术上可行，但这不符合标准且不推荐。",
+				hint: "鼠标左键点击（选择/取消）放置建造单元格<br>按[Ctrl]+则作为轮廓单元格<br>按[Shift]+则作为出口格（FoundationOutline.10）",
+				toggleView: "切换视图 (斜面/正面)",
+				generateOutline: "生成轮廓",
+				clearCells: "清空单元格",
+				codeTitle: "代码",
+				copyCodeBtn: "复制代码",
+				warfacNote: "<strong>关于战争工厂和轮廓的说明：</strong> 在战争工厂中，游戏使用FoundationOutline.10作为新生成单位的主要退出目的地，使用八个相邻的单元格作为替代目的地。这些单元格基本上形成了游戏所认为的工厂的\"围兜\"，而不管图形如何。<br>您看到此消息是因为您没有定义FoundationOutline.10 - 如果您没有为战争工厂创建地基，则可以忽略此注释。<br>您可以通过按住Shift键并单击画布上的任何位置来手动设置FoundationOutline.10。",
+				footerText: "由 Renegade 编写于 2009年9月29日",
+				labelTop: "顶部 / 0",
+				labelRight: "右侧 / X",
+				labelBottom: "底部",
+				labelLeft: "左侧 / Y",
+				codePlaceholder: "请在顶部输入名称、宽度和高度，然后点击\"设置基础参数\"。",
+				outlineMarginTitle: "边距，仅用于轮廓"
+			}
+		};
+
+		function setup(evt) {
+			// 初始化语言切换
+			initLanguage();
+			// 初始化视图切换
+			initViewToggle();
+			// 初始化复制按钮
+			initCopyButtons();
+			
+			// initialization
+			$("#number_warning_x").hide();
+			$("#number_warning_y").hide();
+			$("#name_warning").hide();
+			$("#name_note").hide();
+			$("#warfac_note").hide();
+			$("#sidelabels").hide();
+			//$("#set_params").click(generateCanvas);
+			$("#widthheight").submit(generateCanvas); // set event handler
+			$("#widthheight").submit(); // trigger event to create default canvas
+			$("#clearbtn").click(function() {updateCode(true);});
+			$("#outlnbtn").click(generateOutline);
+			$("#code").val(getLangText('codePlaceholder')); // FF saves the value over refreshes, leaving old foundation data with empty canvases without this.
+		}
+
+		// 初始化语言切换
+		function initLanguage() {
+			// 绑定语言选择事件
+			$("#lang-select").change(function() {
+				switchLanguage($(this).val());
+			});
+			
+			// 默认使用英文
+			switchLanguage($("#lang-select").val());
+		}
+
+		// 切换语言
+		function switchLanguage(langCode) {
+			// 更新页面文本
+			$("#header-title").text(lang[langCode].headerTitle);
+			$("#foundation-title").text(lang[langCode].foundationTitle);
+			$("#label-name").text(lang[langCode].labelName);
+			$("#label-width").text(lang[langCode].labelWidth);
+			$("#label-height").text(lang[langCode].labelHeight);
+			$("#set_params").val(lang[langCode].setParams);
+			$("#number_warning_x").html(lang[langCode].numberWarningX);
+			$("#number_warning_y").html(lang[langCode].numberWarningY);
+			$("#name_warning").html(lang[langCode].nameWarning);
+			$("#name_note").text(lang[langCode].nameNote);
+			$("#hint").html(lang[langCode].hint);
+			$("#toggle-view").text(lang[langCode].toggleView);
+			$("#outlnbtn").val(lang[langCode].generateOutline);
+			$("#clearbtn").val(lang[langCode].clearCells);
+			$("#code-title").text(lang[langCode].codeTitle);
+			$("#copy-code-btn").text(lang[langCode].copyCodeBtn);
+			$("#warfac_note").html(lang[langCode].warfacNote);
+			$("#footer-text").text(lang[langCode].footerText);
+			$("#label_top").text(lang[langCode].labelTop);
+			$("#label_right").text(lang[langCode].labelRight);
+			$("#label_bottom").text(lang[langCode].labelBottom);
+			$("#label_left").text(lang[langCode].labelLeft);
+			
+			// 更新outline margin的title属性
+			$(".outlineMargin").attr("title", lang[langCode].outlineMarginTitle);
+			
+			// 如果代码框还是默认提示文本，也更新
+			if ($("#code").val() === lang.en.codePlaceholder || $("#code").val() === lang.zh.codePlaceholder) {
+				$("#code").val(lang[langCode].codePlaceholder);
+			}
+		}
+
+		// 获取当前语言的文本
+		function getLangText(key) {
+			const currentLang = $("#lang-select").val();
+			return lang[currentLang][key];
+		}
+
+		// 初始化视图切换
+		function initViewToggle() {
+			$("#toggle-view").click(function() {
+				$("#sidelabels").toggleClass("flat-view");
+				// 更新按钮文本
+				if ($("#sidelabels").hasClass("flat-view")) {
+					$(this).text(getLangText('toggleView').replace("(斜面/正面)", "(正面/斜面)").replace("(Angled/Flat)", "(Flat/Angled)"));
+				} else {
+					$(this).text(getLangText('toggleView'));
+				}
+			});
+		}
+
+		// 初始化复制按钮
+		function initCopyButtons() {
+			// 复制按钮点击事件
+			$("#copy-code-btn").click(function() {
+				copyCodeToClipboard();
+				// 临时更改按钮文本提示复制成功
+				const originalText = $(this).text();
+				$(this).text(getLangText('copyCodeBtn').replace("复制代码", "复制成功!").replace("Copy Code", "Copied!"));
+				setTimeout(() => {
+					$(this).text(originalText);
+				}, 2000);
+			});
+		}
+
+		// 复制代码到剪贴板
+		function copyCodeToClipboard() {
+			const codeTextarea = document.getElementById('code');
+			codeTextarea.select();
+			codeTextarea.setSelectionRange(0, 99999); // 移动设备兼容
+			
+			try {
+				document.execCommand('copy');
+			} catch (err) {
+				// 降级方案 - 创建临时元素
+				const tempInput = document.createElement('textarea');
+				tempInput.value = codeTextarea.value;
+				document.body.appendChild(tempInput);
+				tempInput.select();
+				document.execCommand('copy');
+				document.body.removeChild(tempInput);
+			}
+		}
+	
+		$(document).ready(setup);
+	
+		// When set, this stores the first three lines of the code: building name, width and height
+		var baseParams = "Base parameters empty";
+		
+		// This function validates the name, width and height input parameters and returns true if they're in order.
+		// If there's a problem, it unveils warnings and returns false.
+		function validateInput() {
+			var nameGood = true;
+			var widthGood = true;
+			var heightGood = true;
+			
+			// adds a notice if the name is longer than 8 chars...this has no effect on the validation, 
+			// as that's mostly a matter of adhering to tradition
+			($("#name").val().length > 8) ? $("#name_note").show("slow") : $("#name_note").hide("normal");
+			
+			// tests whether the width is not a number or zero or negative
+			if((isNaN(parseInt($("#width").val()))) || (parseInt($("#width").val()) <= 0)) {
+				$("#number_warning_x").show("fast");
+				$("#width").addClass("inputwarn");
+				widthGood = false;
+			} else {
+				$("#number_warning_x").hide("normal");
+				$("#width").removeClass("inputwarn");
+			}
+			
+			// tests whether the height is not a number or zero or negative
+			if((isNaN(parseInt($("#height").val()))) || (parseInt($("#height").val()) <= 0)) {
+				$("#number_warning_y").show("fast");
+				$("#height").addClass("inputwarn");
+				heightGood = false;
+			} else {
+				$("#number_warning_y").hide("normal");
+				$("#height").removeClass("inputwarn");
+			}
+			
+			// tests whether the name is empty or contains whitespace (the latter would technically be legal, but is just poor form)
+			if(($("#name").val().length <= 0) || /\s+/.test($("#name").val())) {
+				$("#name_warning").show("fast");
+				$("#name").addClass("inputwarn");
+				nameGood = false;
+			} else {
+				$("#name_warning").hide("normal");
+				$("#name").removeClass("inputwarn");
+			}
+			
+			return widthGood && heightGood && nameGood;
+		}
+		
+		// This function updates the code box at the bottom with Ares-compliant INI code to generate the foundation the user drew ingame.
+		// As a special case, if the function is passed any value that could be interpreted as "true", e.g. a literal true, a true boolean 
+		// or positive integer, it will instead clear all cells and reset the code box.
+		function updateCode(clear) {
+			var foundationCellsString = "";
+			var outlineCellsString = "";
+			var bibCell = ($(".bibCell").length > 0) ? getCellCoords($(".bibCell")[0]) : false; // abusing weakly typed languages 101  // contains .x and .y coords
+			
+			// special case: clear all
+			if(clear) {
+				$(".selectedCell").removeClass("selectedCell");
+				$(".outlineCell").removeClass("outlineCell");
+				$(".bibCell").removeClass("bibCell");
+				$("#code").val(baseParams);
+				return;
+			}
+			
+			// Vastly improved algorithm only checks cells that are actually selected
+			// foundation cells
+			var selectedCells = $(".selectedCell");
+			for(var i = 0; i < selectedCells.length; ++i) {
+				var tempCoords = getCellCoords(selectedCells[i]);
+				foundationCellsString += "\nFoundation." + i + " = " + (tempCoords.x - 2) + "," + (tempCoords.y - 2);
+			}
+			// outline incl. bib cell 
+			var outlineCells = $(".outlineCell");
+			if(bibCell && (outlineCells.length >= 11)) { // if we have a designated bib cell and there will be someone else occupying 10, we have to switch their places
+				var previous10 = getCellCoords(outlineCells[10]); // this way, we can happily override the old 10
+			}
+			if(bibCell && (outlineCells.length < 11)) { // same basic idea, but since there is no 10 this time, we have to save the empty spot until we know which one to put there
+				var bibWas = -1; // which i/number in the list was the bib?
+			}
+			for(var i = 0; i < outlineCells.length; ++i) {
+				var tempCoords = getCellCoords(outlineCells[i]);
+				//console.debug("ID: %i; tempcoords: %i, %i; bibcell: %i,%i", i, tempCoords.x, tempCoords.y, bibCell.x, bibCell.y);
+				// if it wasn't for the bib handling, this part would be two lines long - the first and the last x_x
+				if(bibCell) { // if a bib cell is defined ...
+					if(i === 10) { // ...and it is bib time, apply it
+						tempCoords = bibCell;
+					} else if((tempCoords.x === bibCell.x) && (tempCoords.y === bibCell.y)) { // if it's not, see if this is the original spot of the bib
+						if(outlineCells.length >= 11) {
+							tempCoords = previous10; // if this is where the bib originally was, place the coords from [10] here instead
+						} else { // if we don't get a [10] item in the list, just place the bib at place .10 (D said this'd work)
+							outlineCellsString += "\nFoundationOutline.10 = " + (bibCell.x - 2) + "," + (bibCell.y - 2);
+							bibWas = i; // memorize for which spot we did this, so we can fill it up later
+							continue; 
+						}
+					}
+				}
+				if((bibWas >= 0) && (i === (outlineCells.length - 1))) { // if the bib was moved elsewhere, and this is the last loop, fill the gap
+					outlineCellsString += "\nFoundationOutline." + bibWas + " = " + (tempCoords.x - 2) + "," + (tempCoords.y - 2);
+					continue;
+					// we could do all sorts of magic to bring the list in order, but it makes no difference in parsing anyway *shrug*
+				}
+				
+				// save the individual lines of code
+				outlineCellsString += "\nFoundationOutline." + i + " = " + (tempCoords.x - 2) + "," + (tempCoords.y - 2);
+			}
+			if(outlineCells.length) {	// if there are outlines, output them
+				$("#code").val(baseParams + foundationCellsString + "\nFoundationOutline.Length = " + outlineCells.length + outlineCellsString);
+				if((outlineCells.length < 11) && !bibCell){ //if there are outlines defined, but no natural .10, and no special bib cell has been set ...
+					$("#warfac_note").show("normal"); // ... give a warning about WarFacs.
+				} else {
+					$("#warfac_note").hide("normal");
+				}
+			} else { // if there are no outlines, just give us the foundation
+				$("#code").val(baseParams + foundationCellsString);
+			}
+		}
+		
+		// this is the click handler for selecting/painting on the canvas
+		function cellSelected(event) {
+			// ctrl+click -> add cell to outline
+			// shift+click -> set outline .10 (bib center)
+			// normal click -> add cell to selection
+			if(event.shiftKey) {								// bib cell handling (出口格)
+				if($(this).hasClass("bibCell")) {
+					$(this).removeClass("bibCell");
+				} else {
+					if($(".bibCell").length) { // if there was already a bib cell defined, kill the previous one
+						$(".bibCell").removeClass("bibCell");
+					}
+					$(this).addClass("outlineCell"); // need this since the bib is ultimately just a special case outline
+					$(this).addClass("bibCell");
+				}
+			} else if($(this).hasClass("outlineMargin")) {		// outline margin cell handling
+				if($(this).hasClass("outlineCell")) { // foundation handling is irrelevant here 'cause only outlines can be on the margin
+					$(this).removeClass("outlineCell");
+				} else {
+					$(this).addClass("outlineCell");
+				}
+			} else {
+				if(!event.ctrlKey) {							// foundation cell handling (建造单元格)
+					if($(this).hasClass("selectedCell")) {
+						$(this).removeClass("selectedCell");
+					} else {
+						$(this).addClass("selectedCell");
+					}
+				} else {										// outline cell handling (轮廓单元格)
+					if($(this).hasClass("outlineCell")) {
+						$(this).removeClass("outlineCell");
+					} else {
+						$(this).addClass("outlineCell");
+					}
+				}
+			}
+			
+			// now that we finally worked out what has changed, time to update the code
+			updateCode();
+		}
+	
+		/*  this function generates the "canvas" foundations will be painted on
+			column and row 0 are the labels
+			column and row 1 are margins for outlines only
+			the last column and row each form the other two sides of the margin
+			
+			ultimatel layout is like this:
+			  LLL
+			 MMMMM
+			LMCCCM
+			LMCCCM
+			LMCCCM
+			 MMMMM
+			where L = label, M = margin, C = canvas
+		*/
+		function generateCanvas(event) {
+			// D asked for this to work with [enter] as well, so I had to use submit; this kills the standard submit
+			event.preventDefault();
+			
+			// this entire thing won't run if the base params aren't valid. there's nothing after this if.
+			if(validateInput()) {
+				// Build the code representation of the base parameters
+				var generatedCode = "Internal Error: If you see this, code _should_ have been generated, but something went wrong in the process.";
+				
+				var buildingName = $("#name").val();
+				var foundWidth = parseInt($("#width").val());
+				var foundHeight = parseInt($("#height").val());
+				
+				generatedCode = "[" + buildingName + "]\nFoundation = Custom\nFoundation.X = " + foundWidth + "\nFoundation.Y = " + foundHeight;
+				
+				// output the base params in the code box and save them globally
+				$("#code").val(generatedCode);
+				baseParams = generatedCode;
+				
+				// Draw the actual canvas
+				$("#editor").empty();
+				$("#sidelabels").width("100%");
+				/* generates width + 2 margins + 1 label columns and
+				   generates height + 2 margins + 1 label rows
+				   
+				   classes:
+					editCell: clickable cells forming the paintable canvas
+					topCell: X-axis labels
+					leftCell: Y-axis labels
+					outlineMargin: only clickable/paintable for outlines
+				*/
+				var canvasYheight = foundHeight + 3; //canvas + 2 outline + 1 labels
+				var canvasXwidth = foundWidth + 3;
+				for(var yRows = 0; yRows <= canvasYheight; ++yRows) {
+					var tempRow = document.createElement("tr");
+					for(var xCols = 0; xCols <= canvasXwidth; ++xCols) {
+						var tempCol = document.createElement("td");
+						// if this cell is neither a label nor in the outline margin, make it editable
+						if((yRows > 1) && (xCols > 1) && (yRows < (canvasYheight - 1)) && (xCols < (canvasXwidth - 1))) $(tempCol).addClass("editCell");
+						
+						// build the label row
+						if((yRows === 0) && (xCols > 1) && (xCols < (canvasXwidth - 1))) {
+							$(tempCol).text((xCols - 2)).addClass("topCell");
+						}
+						// build the label column
+						if((xCols === 0) && (yRows > 1) && (yRows < (canvasYheight - 1))) {
+							$(tempCol).text((yRows - 2)).addClass("leftCell");
+						}
+						
+						// draw the outline margin (surrounds the canvas)
+						if(((xCols > 0) && (xCols < canvasXwidth) && ((yRows === 1) || (yRows === (canvasYheight - 1))))
+							|| ((yRows > 0) && (yRows < canvasYheight) && ((xCols === 1) || (xCols === (canvasXwidth - 1))))){
+							$(tempCol).addClass("outlineMargin").attr("title", getLangText('outlineMarginTitle'));
+						}
+						tempRow.appendChild(tempCol);
+					}
+					// add the whole thing to the canvas/table
+					$("#editor")[0].appendChild(tempRow);
+				}
+				// make the div with the directional labels for the corners visible and reset the container's width to match the editor
+				$("#sidelabels").show("slow", function() {
+					$("#sidelabels").width($("#editor").width());
+				});
+				
+				// Make the cells clickable
+				$("#editor .editCell").click(cellSelected);
+				$("#editor .outlineMargin").click(cellSelected);
+			}
+		}
+		
+		// checks all eight surrounding cells of every cell on the canvas and turns them into outlines if they're empty (individually)
+		// thus auto-generating an outline for the foundation
+		function generateOutline() {
+			// get foundation cells
+			var selectedCells = $(".selectedCell");
+			
+			// if you change this, change the 8 in the for-j below
+			// there should be no reason to change it, though
+			// (these are the locations/directions of the other cells in relation to the current one)
+			var vectors = [{x: -1,y: -1},{x: 0,y: -1},{x: 1,y: -1},{x: -1,y: 0},{x: 1,y: 0},{x: -1,y: 1},{x: 0,y: 1},{x: 1,y: 1}];
+			
+			for(var i = 0; i < selectedCells.length; ++i) {
+				var tempCoords = getCellCoords(selectedCells[i]);
+				// go through all eight adjacent cells and check if they need outlining.
+				// if so, add outline
+				for(var j = 0; j < 8; ++j) {
+					var adjacentCell = getCell(tempCoords.x + vectors[j].x,tempCoords.y + vectors[j].y);
+					//console.debug("i: %i, j: %i, tempX: %i, tempY: %i, vectorX: %i, vectorY: %i", i, j, tempCoords.x, tempCoords.y, vectors[j].x, vectors[j].y);
+					if(!adjacentCell.hasClass("selectedCell")) {
+						adjacentCell.addClass("outlineCell");
+					}
+				}
+			}
+			// as usual, update the actually displayed code
+			updateCode();
+		}
+		
+		// helper function to de-clutter and make access more intuitive
+		function getCell(column, row) {
+			return $($("#editor")[0].rows[row].cells[column]);
+		}
+		
+		// returns an object with .x and .y members denoting the cell column and row in #editor
+		// based on actual table coordinates, though - that is, 0,0 is the top left corner of the label column and row
+		function getCellCoords(cell) {
+			return {x: parseInt($(cell).attr("cellIndex")), y: parseInt($(cell).parent().attr("rowIndex"))};
+		}
+		
+	</script>
+
+</body>
+</html>
